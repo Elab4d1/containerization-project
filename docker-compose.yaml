@@ -1,0 +1,28 @@
+version: "3"
+services:
+  mongodb-service:
+    image: mongo
+    volumes:
+      - data:/data/db
+    container_name: mongodb-service
+    ports:
+      - 27017:27017
+
+  backend:
+    image: elab4d1/backend_image:v2
+    container_name: backend
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongodb-service
+
+  frontend:
+    image: elab4d1/frontend-exam:v1
+    container_name: frontend
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+
+volumes:
+  data:
